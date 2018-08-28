@@ -13,16 +13,29 @@ class App extends Component {
     super(props);
     this.state = {
       movie: [],
-     data:[]
+     data:[],
+     hidden:false
     }
     this.Search = this.Search.bind(this)
     this.fetchMovieID=this.fetchMovieID.bind(this)
   }
+
+
+fetchUpcoming(){
+  axios.get("https://api.themoviedb.org/3/movie/upcoming?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&page=1&append_to_response=credits").then(
+    result=>{
+      console.log(result)
+    }
+  )
+}
+
   fetchMovieID(movieID) {
-    let url = `https://api.themoviedb.org/3/movie/${movieID}?&api_key=b1ceec131e81ece0cacf2f641d01910a`
+    let url = `https://api.themoviedb.org/3/movie/${movieID}?&api_key=b1ceec131e81ece0cacf2f641d01910a&append_to_response=credits`
+  this.setState({hidden:true})
     axios.get(url).then(result => {
-      console.log(result.data)
+console.log(result.data)
       this.setState({data:[result.data]})
+
     }).catch(error => {
         console.log(error)
       }
@@ -48,7 +61,9 @@ class App extends Component {
           }]
         })
 
+
       });
+
 
 
     }).catch(error => {
@@ -59,7 +74,7 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state.movie)
+
     return (
 
 <div>
@@ -72,6 +87,7 @@ class App extends Component {
       callbackForList = {
         this.fetchMovieID
       }
+      hide={this.state.hidden}
       />
 <Card data={this.state.data}/>
 </div>
@@ -79,7 +95,9 @@ class App extends Component {
     );
   }
   componentDidMount(){
-    this.fetchMovieID(550)
+    console.log(this.state.hidden)
+   // this.fetchMovieID(550)
+    this.fetchUpcoming()
   }
 }
 

@@ -16,7 +16,8 @@ class SearchBar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            movieName: "",
+
+            hide:false
 
         }
 
@@ -36,24 +37,27 @@ class SearchBar extends Component {
              event => this.serachTermChange(event.target.value)
             }
             />
-     <List item={this.props.item} callback={this.props.callbackForList}/>
+     <List item={this.props.item} hide={this.state.hide} callback={this.props.callbackForList}/>
 
             </div>
 
         )
     }
 
-
+componentWillReceiveProps(props){
+//this.setState({hide:props.hide})
+}
 
     serachTermChange(term) {
 
 if(term===""||term===null){
-
+this.setState({hide:true})
 }
-        this.setState({
-            movieName: term
-        })
-       this.props.callback(this.state.movieName)
+else{
+    this.setState({hide:false})
+}
+
+       this.props.callback(term)
 
 
 
