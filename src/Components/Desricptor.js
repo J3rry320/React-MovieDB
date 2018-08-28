@@ -1,8 +1,9 @@
 import React,{ Component } from "react";
 
-import Stars from './starcounter'
-let element=null;
 
+import Studio from './Studio';
+import Cast from './Cast';
+import Media from './Media'
 class Cards extends Component{
     constructor(props){
         super(props)
@@ -50,7 +51,7 @@ class Cards extends Component{
         let genre=""
 if(this.state.genre){
      genre=  this.state.genre.map(element=>{
-        return element.name+" "
+        return element.name+","
     })
 }
 else{
@@ -58,70 +59,40 @@ else{
 }
 
 
+
         if (this.props.data.length===0){
-            return "Loading"
+            return "Type Bitch"
         }
         else{
             return(
 
-                <div className="media">
-               <center>
-               <img className="mr-3" src={this.state.Poster} alt="Generic placeholder image"/>
-              <button className="btn btn-block btn-primary">Find Similar Movies</button>
-               </center>
+          <div className="row">
+          <div className="col-sm-12">
+<Media Poster={this.state.Poster}
+title={this.state.title} tagline={this.state.tagline}
+avgRating={this.state.avgRating} date={this.state.date}
+runtime={this.state.runtime} budget={this.state.budget}
+revenue={this.state.revenue} Description={this.state.Description}
+genre={genre}/>
+          </div>
+ <div className="col-sm-4">
+  <span className="left-span">
 
+<Studio data={this.state.productionCompanies}/>
 
-  <div className="media-body text-center">
+</span>
+</div>
+<div className="col-sm-8">
+<span className="left-span">
 
-  <div className="container">
-  <div className="row">
-  <div className="col-md-5 col-sm-12">
-  <h1 className="mt-4">{this.state.title}</h1>
-   <h5 className="mono-space">"{this.state.tagline}"</h5>
+<Cast data={this.state.Cast}/>
 
-   <Stars total={this.state.avgRating}/>
-   <p className="lead">
-   <span className="left-span pt-2">
-   <i className="fas fa-calendar-alt pr-2"></i>{this.state.date}
-   </span>
-   <br/>
-   <span className="left-span pt-2">
-   <i className="far fa-clock"></i>{Math.round(this.state.runtime/60)}hours and {this.state.runtime%60}minutes
-   </span>
-   <br/>
-   <span className="left-span pt-2">
-   <span className="pr-3">
-   <i className="fas fa-money-bill-alt pr-2"></i>
-   {this.state.budget}
-   </span>
-<span>
-<i className="far fa-money-bill-alt pr-2"></i>
-{this.state.revenue}
 </span>
 
-
-   </span>
-   <br/>
-   <span className="left-span pt-2">
-     {genre}
-   </span>
-   </p>
-
-
-   </div>
-  <div className="col-md-7 col-sm-12">
-<p className="text-left lead mt-4">{this.state.Description}</p>
-
   </div>
-  </div>
+          </div>
 
 
-
-  </div>
-
-
-  </div>
-</div>
 
 
 
