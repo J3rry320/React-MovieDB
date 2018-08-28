@@ -48,7 +48,7 @@ class SearchBar extends Component {
     serachTermChange(term) {
 
 if(term===""||term===null){
-    this.setState()
+
 }
         this.setState({
             movieName: term

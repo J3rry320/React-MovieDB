@@ -10,6 +10,6 @@ const cards=(props)=>{
        <a href="#" className="btn btn-primary">Find Movie of the same Genre</a>
     </div>
       </div>
-    )
-}
-export deafult cards
+    );
+};
+export default cards;

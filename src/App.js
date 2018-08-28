@@ -5,20 +5,24 @@ import logo from './logo.svg';
 import './App.css';
 import Search from "./Components/SearchBar";
 import axios from 'axios';
+import Card from './Components/Desricptor'
 
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      movie: []
+      movie: [],
+     data:[]
     }
     this.Search = this.Search.bind(this)
+    this.fetchMovieID=this.fetchMovieID.bind(this)
   }
   fetchMovieID(movieID) {
     let url = `https://api.themoviedb.org/3/movie/${movieID}?&api_key=b1ceec131e81ece0cacf2f641d01910a`
     axios.get(url).then(result => {
-      console.log(result)
+      console.log(result.data)
+      this.setState({data:[result.data]})
     }).catch(error => {
         console.log(error)
       }
@@ -58,8 +62,8 @@ class App extends Component {
     console.log(this.state.movie)
     return (
 
-
-      <Search callback = {
+<div>
+<Search callback = {
         this.Search
       }
       item = {
@@ -69,8 +73,13 @@ class App extends Component {
         this.fetchMovieID
       }
       />
+<Card data={this.state.data}/>
+</div>
 
     );
+  }
+  componentDidMount(){
+    this.fetchMovieID(550)
   }
 }
 

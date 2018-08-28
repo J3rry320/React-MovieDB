@@ -1,12 +1,30 @@
 import React,{ Component } from "react";
-import Cards from "./Cards";
+import Card from "./Cards";
+
+let element=null;
+
 class Cards extends Component{
     constructor(props){
         super(props)
         this.state={
-            data:[]
+
         }
     }
+
+    componentWillReceiveProps(props){
+
+        props.data.forEach(element => {
+            console.log(element)
+            this.setState({
+                title:element.title,
+                Description:element.overview,
+                Poster:"http://image.tmdb.org/t/p/w185//"+element.poster_path
+
+            })
+        });
+                //this.extractData(this.state.data)
+
+            }
     render(){
         return(
             <div className="jumbotron jumbotron-fluid">
@@ -16,7 +34,7 @@ class Cards extends Component{
 
     <div className="row">
             <div className="col-md-4 col-sm-12">
-<Cards/>
+<Card title={this.state.title} Image={this.state.Poster} description={this.state.Description}/>
             </div>
             <div className="col-md-8 col-sm-12">
 
@@ -26,4 +44,8 @@ class Cards extends Component{
 </div>
         )
     }
+
+
+
 }
+export default Cards;
