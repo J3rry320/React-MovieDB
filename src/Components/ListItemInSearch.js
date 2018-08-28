@@ -7,7 +7,7 @@ const ListItem=(props)=>{
 
 
    return (
-    <li onClick={handleClick} data-id={props.id}  className="list-group-item">
+    <li onClick={e=>props.callback(e.currentTarget.dataset.id )} data-id={props.id}  className="list-group-item">
 {props.name}
 
     </li>
@@ -15,17 +15,6 @@ const ListItem=(props)=>{
 )
 };
 
-const fetchMovieID=(movieID)=>{
-    let url = `https://api.themoviedb.org/3/movie/${movieID}?&api_key=b1ceec131e81ece0cacf2f641d01910a`
-  axios.get(url).then(result=>{
-      console.log(result)
-  }).catch(error=>{
-      console.log(error)
-  }
 
-  )
-}
-const handleClick=(e)=>{
-fetchMovieID(   e.currentTarget.dataset.id )
-};
+
 export default ListItem;
