@@ -26,20 +26,25 @@ class SearchBar extends Component {
 
     render() {
         return (
-           <div>
 
-            <input type = "search"
-            value = {
-                this.state.movieName
-            }
+  <div>
 
-            onChange = {
-             event => this.serachTermChange(event.target.value)
-            }
-            />
-     <List item={this.props.item} hide={this.state.hide} callback={this.props.callbackForList}/>
+<input type = "search"
+className="form-control"
+placeholder="Type the Movie Name"
+value = {
+    this.state.movieName
+}
 
-            </div>
+onChange = {
+ event => this.serachTermChange(event.target.value)
+}
+/>
+<List item={this.props.item} hide={this.state.hide} callback={this.props.callbackForList}/>
+
+</div>
+
+
 
         )
     }
