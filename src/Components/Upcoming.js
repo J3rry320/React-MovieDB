@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import axios from 'axios';
 import Descriptor from "./Media"
+import Stars from './starcounter'
 let elements=[]
 class UpcomingMovies extends Component{
     constructor(props){
@@ -14,7 +15,7 @@ class UpcomingMovies extends Component{
           result=>{
             result.data.results.forEach(element=>{
 
-                this.setState({
+              elements.push({
                     title:element.title,
                     Description:element.overview,
                     Poster:"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+element.poster_path,
@@ -27,7 +28,7 @@ class UpcomingMovies extends Component{
                     background:"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+element.backdrop_path,
                     language:element.original_language,
                     voteCount:element.vote_count,
-                    statusOfRelease:element.status,
+
                     id:element.id,//All are array from here
 
                     genre:element.genre_ids,
@@ -42,14 +43,31 @@ class UpcomingMovies extends Component{
         )
       }
       render(){
+const items=elements.map(items=>{
+    return (  <li className="media" data-id={items.id} key={items.id}>
+    <img className="mr-3" src={items.Poster} alt="Generic placeholder image"/>
+    <div className="media-body">
+      <h5 className="mt-3 mb-1">{items.title}</h5>
+      <br/>
+      <span className="left-span">
 
+      <Stars total={items.avgRating} /></span><br/>
+      <span>{items.date}</span>
+      <br/>
+    {items.Description}
+    </div>
+  </li>)
+})
           return(
-            <Descriptor Poster={this.state.Poster}
-            title={this.state.title}
-            avgRating={this.state.avgRating} date={this.state.date}
-            runtime={this.state.runtime}  Description={this.state.Description}
-            />
+        <div>
+
+
+            {items}
+        </div>
           )
+      }
+      clickFunction(){
+
       }
       componentDidMount(){
           this.fetchUpcoming()

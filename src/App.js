@@ -26,7 +26,7 @@ class App extends Component {
         <ul className="navbar-nav">
       <li className="nav-item active">
 
-      <Link to="/upcoming">Dashboard</Link>
+      <Link to="/upcoming" onClick={console.log("hello")}>Dashboard</Link>
       <Link to="/">Home</Link>
       </li>
       </ul>

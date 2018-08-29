@@ -13,9 +13,26 @@ class Home extends Component{
         this.Search = this.Search.bind(this)
         this.fetchMovieID=this.fetchMovieID.bind(this)
     }
+
+fetchMovieByDescription(){
+
+    let url=`https://api.themoviedb.org/3/discover/movie?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=878`;
+axios.get(url).then(
+    result=>{
+        console.log(result.data)
+    }
+).catch(
+    error=>{
+        console.log(error)
+    }
+)
+}
+
     fetchMovieID(movieID) {
         let url = `https://api.themoviedb.org/3/movie/${movieID}?&api_key=b1ceec131e81ece0cacf2f641d01910a&append_to_response=credits`
-      this.setState({hidden:true})
+
+
+        this.setState({hidden:true})
         axios.get(url).then(result => {
     console.log(result.data)
           this.setState({data:[result.data]})
@@ -83,6 +100,9 @@ class Home extends Component{
               <Card data={this.state.data}/>
             </div>
           )
+      }
+      componentDidMount(){
+          this.fetchMovieByDescription()
       }
 }
 export default Home
