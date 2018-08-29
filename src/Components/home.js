@@ -14,7 +14,7 @@ class Home extends Component{
         this.fetchMovieID=this.fetchMovieID.bind(this)
     }
 
-fetchMovieByDescription(){
+fetchMovieByDescription(genre,cast){
 
     let url=`https://api.themoviedb.org/3/discover/movie?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=878`;
 axios.get(url).then(
@@ -102,6 +102,7 @@ axios.get(url).then(
           )
       }
       componentDidMount(){
+          console.log(this.props.match.url,this.props.match.path)
           this.fetchMovieByDescription()
       }
 }

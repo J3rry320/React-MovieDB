@@ -8,7 +8,12 @@ import Upcoming from "./Components/Upcoming";
 import {Link,Route} from 'react-router-dom'
 class App extends Component {
 
-
+constructor(props){
+  super(props);
+  this.state={
+    hiddenHome:false
+  }
+}
 
 
 
@@ -16,7 +21,7 @@ class App extends Component {
 
 
   render() {
-
+let switchClass=this.state.hiddenHome?"d-none":"d-block"
     return (
       <div>
 
@@ -26,7 +31,7 @@ class App extends Component {
         <ul className="navbar-nav">
       <li className="nav-item active">
 
-      <Link to="/upcoming" onClick={console.log("hello")}>Dashboard</Link>
+      <Link to="/upcoming" onClick={console.log("clicked")}>Dashboard</Link>
       <Link to="/">Home</Link>
       </li>
       </ul>
@@ -34,7 +39,7 @@ class App extends Component {
             <div>
             <Route path="/upcoming" component={Upcoming}/>
           </div>
-          <div>
+          <div className={switchClass}>
             <Route path="/" component={Home}/>
           </div>
           </div>
