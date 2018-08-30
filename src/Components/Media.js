@@ -7,7 +7,7 @@ const Media=(props)=>{
         <center>
         <img className="mr-3" src={props.Poster} alt="Generic placeholder image"/>
         <br/>
-       <button className="btn btn-block btn-primary">Find Similar Movies</button>
+       <button data-id={props.genreId} onClick={e=>props.callback(e.target.dataset.id)} className="btn btn-block btn-primary">Find Similar Movies</button>
         </center>
 
 

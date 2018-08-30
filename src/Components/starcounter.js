@@ -14,7 +14,7 @@ for(let j=0;j<remainingStars;j++){
     element.push( <i className="left-span far fa-star" key={j+10}></i>)
 }
 
-    console.log(totalStars,completeStars,remainingStars,halfStars)
+    //console.log(totalStars,completeStars,remainingStars,halfStars)
 return(
 <div className="left-span">
 

@@ -1,34 +1,27 @@
 import React,{Component} from 'react';
 import Search from "./SearchBar";
 import axios from 'axios';
-import Card from './Desricptor'
+import Card from './Desricptor';
+let value=null
 class Home extends Component{
     constructor(props){
         super(props);
         this.state = {
           movie: [],
          data:[],
-         hidden:false
+         hidden:false,
+         value:null
         }
-        this.Search = this.Search.bind(this)
-        this.fetchMovieID=this.fetchMovieID.bind(this)
+        this.Search = this.Search.bind(this);
+        this.setValue=this.setValue.bind(this)
+        this.fetchMovieID=this.fetchMovieID.bind(this);
+        this.setInput=this.setInput.bind(this)
     }
 
-fetchMovieByDescription(genre,cast){
 
-    let url=`https://api.themoviedb.org/3/discover/movie?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=878`;
-axios.get(url).then(
-    result=>{
-        console.log(result.data)
-    }
-).catch(
-    error=>{
-        console.log(error)
-    }
-)
-}
-
-    fetchMovieID(movieID) {
+    fetchMovieID(value,movieID){
+       // console.log(value)
+         this.setState({value:value})
         let url = `https://api.themoviedb.org/3/movie/${movieID}?&api_key=b1ceec131e81ece0cacf2f641d01910a&append_to_response=credits`
 
 
@@ -44,7 +37,7 @@ axios.get(url).then(
         )
       }
       Search(movieName) {
-
+//console.log(movieName)
         axios.get(`https://api.themoviedb.org/3/search/movie?api_key=b1ceec131e81ece0cacf2f641d01910a&query=${movieName}`).then(result => {
 
           this.setState({
@@ -72,6 +65,13 @@ axios.get(url).then(
         })
 
       }
+      setValue(val){
+this.setState({hidden:val})
+
+      }
+      setInput(){
+        this.setState({value:null})
+      }
       render(){
           return(
               <div>
@@ -79,7 +79,7 @@ axios.get(url).then(
             <div className="row">
 
             <div className="col-sm-12">
-            <Search callback = {
+            <Search value={this.state.value} onchange={this.setValue} callback = {
                     this.Search
                   }
                   item = {
@@ -88,6 +88,7 @@ axios.get(url).then(
                   callbackForList = {
                     this.fetchMovieID
                   }
+                  changeInput={this.setInput}
                   hide={this.state.hidden}
                   />
 
@@ -102,8 +103,8 @@ axios.get(url).then(
           )
       }
       componentDidMount(){
-          console.log(this.props.match.url,this.props.match.path)
-          this.fetchMovieByDescription()
+
+
       }
 }
 export default Home

@@ -16,8 +16,8 @@ class SearchBar extends Component {
     constructor(props) {
         super(props)
         this.state = {
-
-            hide:false
+            movieName:"",
+            hide:this.props.hide
 
         }
 
@@ -25,6 +25,8 @@ class SearchBar extends Component {
     }
 
     render() {
+        let value= this.props.value
+        console.log(value)
         return (
 
   <div>
@@ -32,15 +34,17 @@ class SearchBar extends Component {
 <input type = "search"
 className="form-control"
 placeholder="Type the Movie Name"
+
 value = {
-    this.state.movieName
+   value||this.state.movieName
 }
+onFocus={this.props.changeInput}
 
 onChange = {
- event => this.serachTermChange(event.target.value)
+ event => this.serachTermChange(event.target.value,value)
 }
 />
-<List item={this.props.item} hide={this.state.hide} callback={this.props.callbackForList}/>
+<List item={this.props.item} onchange={this.props.onchange} hide={this.props.hide} callback={this.props.callbackForList}/>
 
 </div>
 
@@ -53,14 +57,16 @@ componentWillReceiveProps(props){
 //this.setState({hide:props.hide})
 }
 
-    serachTermChange(term) {
-
+    serachTermChange(term,value) {
+        this.props.onchange(false)
 if(term===""||term===null){
+
 this.setState({hide:true})
 }
 else{
     this.setState({hide:false})
 }
+this.setState({movieName:term})
 
        this.props.callback(term)
 

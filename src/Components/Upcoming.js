@@ -10,38 +10,62 @@ class UpcomingMovies extends Component{
         super(props);
         this.state={
          element:[],
-         item:[]
+         item:[],
+         ifForOther:this.props.data
         }
         this._onSelect=this._onSelect.bind(this)
     }
 
     updateItems(array){
+        if(this.state.ifForOther){
 
+            let items=this.state.ifForOther.map(items=>{
+                return (  <li className="media" data-id={items.id} key={items.id}>
+                <img className="mr-3" src={"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+items.poster_path} alt="Generic placeholder image"/>
+                <div className="media-body">
+                  <h5 className="mt-3 mb-1">{items.title}</h5>
+                  <br/>
+                  <span className="left-span">
 
-        let items=array.map(items=>{
-            return (  <li className="media" data-id={items.id} key={items.id}>
-            <img className="mr-3" src={items.Poster} alt="Generic placeholder image"/>
-            <div className="media-body">
-              <h5 className="mt-3 mb-1">{items.title}</h5>
-              <br/>
-              <span className="left-span">
+                  <Stars total={items.vote_average} /></span><br/>
+                  <span>{items.release_date}</span>
+                  <br/>
+                {items.overview}
+                </div>
+              </li>)
+            })
 
-              <Stars total={items.avgRating} /></span><br/>
-              <span>{items.date}</span>
-              <br/>
-            {items.Description}
-            </div>
-          </li>)
-        })
+            this.setState({
+                item: [ items]
+              })
+        }
+else{
+    let items=array.map(items=>{
+        return (  <li className="media" data-id={items.id} key={items.id}>
+        <img className="mr-3" src={items.Poster} alt="Generic placeholder image"/>
+        <div className="media-body">
+          <h5 className="mt-3 mb-1">{items.title}</h5>
+          <br/>
+          <span className="left-span">
 
-        this.setState({
-            item: [ items]
-          })
+          <Stars total={items.avgRating} /></span><br/>
+          <span>{items.date}</span>
+          <br/>
+        {items.Description}
+        </div>
+      </li>)
+    })
+
+    this.setState({
+        item: [ items]
+      })
+}
+
 
 
 
     }
-    fetchUpcoming(Date){
+    fetchUpcoming(){
         axios.get("https://api.themoviedb.org/3/movie/upcoming?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&page=1&append_to_response=credits").then(
           result=>{
             result.data.results.forEach(element=>{
@@ -78,51 +102,106 @@ class UpcomingMovies extends Component{
       _onSelect(value){
 
     switch(value.value){
-        case "Rating":
-        let sortedArrRating=this.state.element.sort(function(a, b) {
-            var textA = a.avgRating;
-            var textB = b.avgRating;
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-        });
+        case "Rating Low To High":
+
+        if(this.state.ifForOther){
+            this.updateItems(this.state.ifForOther.sort(function(a, b) {
+                let textA = a.vote_average;
+                let textB = b.vote_average;
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            }));
+        }
+        else{
+            let sortedArrRating=this.state.element.sort(function(a, b) {
+                let textA = a.avgRating;
+                let textB = b.avgRating;
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
+            this.setState(prevElement=>{
+                element: [...prevElement.element, sortedArrRating]
+              })
+
+
+              this.updateItems(this.state.element)
+        }
 
 
 
-        this.setState(prevElement=>{
-            element: [...prevElement.element, sortedArrRating]
-          })
 
-this.updateItems(this.state.element)
+
+
 
         break;
+        case "Rating High To Low":
+        if(this.state.ifForOther){
+            this.updateItems(this.state.ifForOther.sort(function(a, b) {
+                let textA = a.vote_average;
+                let textB = b.vote_average;
+                return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+            }));
+        }
+        else{
+            let sortedArrRatingHigh=this.state.element.sort(function(a, b) {
+                let textA = a.avgRating;
+                let textB = b.avgRating;
+                return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
+            });
+            this.setState(prevElement=>{
+                element: [...prevElement.element, sortedArrRatingHigh]
+              })
+
+    this.updateItems(this.state.element)
+        }
+
+break;
         case "Alphabetical":
+        if(this.state.ifForOther){
+            this.updateItems(this.state.ifForOther.sort(function(a, b) {
+                let textA = a.title.toUpperCase();
+                let textB = b.title.toUpperCase();
+                return (textA <textB) ? -1 : (textA>textB) ? 1 : 0;
+            }));
+        }
+        else{
+            let sortedArr=this.state.element.sort(function(a, b) {
+                let textA = a.title.toUpperCase();
+                let textB = b.title.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
 
-       let sortedArr=this.state.element.sort(function(a, b) {
-            var textA = a.title.toUpperCase();
-            var textB = b.title.toUpperCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-        });
 
 
+            this.setState(prevElement=>{
+                element: [...prevElement.element, sortedArr]
+              })
 
-        this.setState(prevElement=>{
-            element: [...prevElement.element, sortedArr]
-          })
+    this.updateItems(this.state.element)
+        }
 
-this.updateItems(this.state.element)
 
 
         break;
         case "Date":
-        let sortedArrDate=this.state.element.sort(function(a, b) {
-            var textA = a.date.toUpperCase();
-            var textB = b.date.toUpperCase();
-            return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
-        });
+        if(this.state.ifForOther){
+            this.updateItems(this.state.ifForOther.sort(function(a, b) {
+                let textA = a.release_date.toUpperCase();
+                let textB = b.release_date.toUpperCase();
+                return (textA <textB) ? -1 : (textA>textB) ? 1 : 0;
+            }));
+        }
+        else{
+            let sortedArrDate=this.state.element.sort(function(a, b) {
+                let textA = a.date.toUpperCase();
+                let textB = b.date.toUpperCase();
+                return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+            });
 
-        this.setState(prevElement=>{
-            element: [...prevElement.element, sortedArrDate]
-          })
-       this.updateItems(this.state.element)
+            this.setState(prevElement=>{
+                element: [...prevElement.element, sortedArrDate]
+              })
+           this.updateItems(this.state.element)
+        }
+
 
 
         break;
@@ -132,10 +211,11 @@ this.updateItems(this.state.element)
 
 
 
-const options=["Rating","Alphabetical","Date"]
+const options=["Rating Low To High","Rating High To Low","Alphabetical","Date"]
 
           return(
-        <div>
+        <div key={1}>
+
 <Dropdown options={options} onChange={this._onSelect} value={options[0]} placeholder="Select an option" />
 {this.state.item}
 
@@ -146,6 +226,7 @@ const options=["Rating","Alphabetical","Date"]
 
       }
       componentDidMount(){
+
         this.fetchUpcoming();
 
       }
