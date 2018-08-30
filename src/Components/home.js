@@ -73,6 +73,7 @@ this.setState({hidden:val})
         this.setState({value:null})
       }
       render(){
+
           return(
               <div>
             <div className="container">
@@ -103,7 +104,6 @@ this.setState({hidden:val})
           )
       }
       componentDidMount(){
-
 
       }
 }

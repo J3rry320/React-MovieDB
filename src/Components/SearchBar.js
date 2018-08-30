@@ -26,7 +26,7 @@ class SearchBar extends Component {
 
     render() {
         let value= this.props.value
-        console.log(value)
+
         return (
 
   <div>
