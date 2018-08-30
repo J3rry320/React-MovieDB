@@ -5,10 +5,10 @@ import Studio from './Studio';
 import Cast from './Cast';
 import Media from './Media';
 import Upcoming from './Upcoming';
-import {uniqBy} from 'lodash'
+
 let toShowMovie=true;
 let itemToShow=null;
-let titleArray=[]
+
 class Cards extends Component{
     constructor(props){
         super(props)
@@ -63,28 +63,7 @@ class Cards extends Component{
 
 
             })
-            titleArray.push({
-                title:element.title,
-                Description:element.overview,
-                Poster:"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+element.poster_path,
-                homepage:element.homepage,
-                date:element.release_date,
-                tagline:element.tagline,
-                avgRating:element.vote_average,
-                runtime:element.runtime,
-                revenue:element.revenue,
-                popularity:element.popularity,
-                background:"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+element.backdrop_path,
-                budget:element.budget,
-                voteCount:element.vote_count,
-                statusOfRelease:element.status,
-                imdbId:element.imdb_id,//All are array from here
-                productionCompanies:element.production_companies,
-                genre:element.genres,
-                productionCountry:element.production_country,
-                spoken_languages:element.spoken_languages,
 
-            })
         });
 
 
@@ -162,19 +141,10 @@ return(
 }
     }
 
-    setCookie(){
-        if (typeof(Storage) !== "undefined") {
-            let arrayToPush=uniqBy(titleArray,'title')
-console.log(arrayToPush)
-            localStorage.setItem("title",JSON.stringify(arrayToPush))
-            console.log(localStorage.getItem("title"))
-         } else {
-             // Sorry! No Web Storage support..
-         }
-    }
+
 
 componentWillUpdate(){
-    this.setCookie()
+
 }
 
 

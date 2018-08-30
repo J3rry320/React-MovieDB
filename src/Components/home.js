@@ -2,7 +2,10 @@ import React,{Component} from 'react';
 import Search from "./SearchBar";
 import axios from 'axios';
 import Card from './Desricptor';
+import {uniqBy} from 'lodash';
 let value=null
+let titleArray=[];
+let arrToPass=null;
 class Home extends Component{
     constructor(props){
         super(props);
@@ -21,20 +24,30 @@ class Home extends Component{
 
     fetchMovieID(value,movieID){
        // console.log(value)
+
+
          this.setState({value:value})
         let url = `https://api.themoviedb.org/3/movie/${movieID}?&api_key=b1ceec131e81ece0cacf2f641d01910a&append_to_response=credits`
 
 
         this.setState({hidden:true})
         axios.get(url).then(result => {
-    console.log(result.data)
-          this.setState({data:[result.data]})
+   // console.log(result.data)
+          this.setState({data:[result.data]},()=>{
+
+            this.checkCookie()
+
+          })
+
+          titleArray.push(result.data)
+          this.setCookie()
 
         }).catch(error => {
             console.log(error)
           }
 
         )
+
       }
       Search(movieName) {
 //console.log(movieName)
@@ -65,6 +78,16 @@ class Home extends Component{
         })
 
       }
+      setCookie(){
+        if (typeof(Storage) !== "undefined") {
+
+
+            localStorage.setItem("title",JSON.stringify(titleArray))
+
+         } else {
+             // Sorry! No Web Storage support..
+         }
+    }
       setValue(val){
 this.setState({hidden:val})
 
@@ -72,8 +95,35 @@ this.setState({hidden:val})
       setInput(){
         this.setState({value:null})
       }
+      checkCookie(){
+        let arr= JSON.parse(localStorage.getItem("title"));
+
+        let val=""
+        let title=[]
+        let arrToCheck=this.state.data.map(ele=>{return ele.title});
+        arr.map(element=>{
+
+          title.push(element.title)
+        })
+        console.log(title,arrToCheck)
+
+
+
+        if (title.indexOf(arrToCheck[0]) > -1) {
+     arrToPass.push=arr[title.indexOf(arrToCheck[0])]
+      } else {
+        arrToPass=this.state.data;
+      }
+return val;
+
+
+      }
       render(){
 
+arrToPass=this.state.data
+if(arrToPass=this.state.data){
+
+}
           return(
               <div>
             <div className="container">
@@ -99,11 +149,15 @@ this.setState({hidden:val})
 
 
               </div>
-              <Card data={this.state.data}/>
+              <Card data={arrToPass}/>
             </div>
           )
       }
       componentDidMount(){
+
+      }
+
+      componentWillUpdate(props,state){
 
       }
 }

@@ -36,7 +36,7 @@ let switchClass=this.state.hiddenHome?"d-none":"d-block"
       <li className="nav-item active">
       <Link className="nav-link" to="/">Home</Link>
       </li>
-      <li class="nav-item">
+      <li className="nav-item">
       <Link className="nav-link pr-2" to="/upcoming">Upcoming</Link>
       </li>
 
