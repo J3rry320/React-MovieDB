@@ -6,25 +6,34 @@ import Cast from './Cast';
 import Media from './Media';
 import Upcoming from './Upcoming';
 
-let toShowMovie=true;
+
 let itemToShow=null;
 
 class Cards extends Component{
     constructor(props){
         super(props)
         this.state={
-         items:[]
+         items:[],
+         toShowMovie:true,
         }
         this.fetchMovieByDescription=this.fetchMovieByDescription.bind(this)
     }
 
-    fetchMovieByDescription(genre,cast){
+    fetchMovieByDescription(genre,country,cast){
+        let url;
+        console.log(genre,country.substring(0,2))
+       if(genre && country && !cast){
+         url=`https://api.themoviedb.org/3/discover/movie?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}&region=${country.substring(0,2)}`;
+       }
+       if(cast && !genre){
+           url=`https://api.themoviedb.org/3/discover/movie?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_cast=${cast}`
+       }
 
-        let url=`https://api.themoviedb.org/3/discover/movie?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}`;
     axios.get(url).then(
         result=>{
-            toShowMovie=false
- this.setState({items:[<Upcoming data={result.data.results}/>]})
+
+            console.log(result)
+ this.setState({items:[<Upcoming data={result.data.results}/>],toShowMovie:false})
 
         }
     ).catch(
@@ -36,11 +45,11 @@ class Cards extends Component{
     componentWillReceiveProps(props){
 
         props.data.forEach(element => {
-console.log(element)
+
             this.setState({
                 title:element.title,
                 Description:element.overview,
-                Poster:"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+element.poster_path,
+                Poster:"http://image.tmdb.org/t/p/w185/"+element.poster_path,
                 homepage:element.homepage,
                 date:element.release_date,
                 tagline:element.tagline,
@@ -100,9 +109,10 @@ else{
         if (this.props.data.length===0){
             return "Type Bitch"
         }
-        else if(toShowMovie && this.props.data.length!==0 ){
+        else if(this.state.toShowMovie && this.props.data.length!==0 ){
             return(
 
+<div className="container" style={{backgroundImage:`url(${this.state.background})`,backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
 
 
                 <div className="row">
@@ -128,21 +138,23 @@ language={this.state.spoken_languages}
       <div className="col-sm-12 col-md-8">
 
 
-      <Cast data={this.state.Cast}/>
+      <Cast callback={this.fetchMovieByDescription} data={this.state.Cast}/>
 
 
         </div>
 
                 </div>
 
+</div>
 
 
             )
         }
 else {
-    console.log("Done")
+
 return(
     <div>
+        <button onClick={e=>{this.setState({toShowMovie:true})}} className="btn btn-primary btn-block">Go Back</button>
     {this.state.items}
     </div>
 )

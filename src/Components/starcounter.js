@@ -16,7 +16,7 @@ for(let j=0;j<remainingStars;j++){
 
     //console.log(totalStars,completeStars,remainingStars,halfStars)
 return(
-<div className="left-span">
+<div className="left-span pt-3">
 
 {element}
 

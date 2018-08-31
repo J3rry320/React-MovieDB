@@ -10,7 +10,7 @@ const Cast=(props)=>{
   <img className="mr-2 mt-2 img-fluid" style={{height:"100px"}} src={image} alt={element.name}/>
   <div className="media-body ">
     <h5 className="mt-3 mb-1 lead">{element.name} as {element.character}</h5>
-<button className="btn btn-outline-success">Find More Movies With {element.name}</button>
+<button onClick={e=>{console.log(e.currentTarget.dataset.id)}} className="btn btn-outline-success">Find More Movies With {element.name}</button>
 
   </div>
 </li>
