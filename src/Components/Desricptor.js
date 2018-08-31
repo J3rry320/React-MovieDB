@@ -36,7 +36,7 @@ class Cards extends Component{
     componentWillReceiveProps(props){
 
         props.data.forEach(element => {
-
+console.log(element)
             this.setState({
                 title:element.title,
                 Description:element.overview,
@@ -55,7 +55,7 @@ class Cards extends Component{
                 imdbId:element.imdb_id,//All are array from here
                 productionCompanies:element.production_companies,
                 genre:element.genres,
-                productionCountry:element.production_country,
+                productionCountry:element.production_countries,
                 spoken_languages:element.spoken_languages,
                 Cast:element.credits
 
@@ -75,15 +75,20 @@ class Cards extends Component{
 
 
 
-        let genre="";
-        let genreId=""
+        let genre,genreId;
+
+
+
 if(this.state.genre){
      genre=  this.state.genre.map(element=>{
-        return element.name+","
+        return element.name+" "
     })
     genreId= this.state.genre.map(element=>{
         return element.id
     })
+
+
+
 }
 else{
     genre="";
@@ -103,25 +108,28 @@ else{
                 <div className="row">
                 <div className="col-sm-12">
       <Media Poster={this.state.Poster}
+      popularity={this.state.popularity}
+      homepage={this.state.homepage}
+country={this.state.productionCountry}
+language={this.state.spoken_languages}
       title={this.state.title} tagline={this.state.tagline}
       avgRating={this.state.avgRating} date={this.state.date}
       runtime={this.state.runtime} budget={this.state.budget}
       revenue={this.state.revenue} Description={this.state.Description}
       genre={genre} callback={this.fetchMovieByDescription} genreId={genreId}/>
                 </div>
-       <div className="col-sm-4">
-        <span className="left-span">
+       <div className="col-sm-12 col-md-4">
+
 
       <Studio data={this.state.productionCompanies}/>
 
-      </span>
+
       </div>
-      <div className="col-sm-8">
-      <span className="left-span">
+      <div className="col-sm-12 col-md-8">
+
 
       <Cast data={this.state.Cast}/>
 
-      </span>
 
         </div>
 

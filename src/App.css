@@ -38,5 +38,9 @@
   text-decoration: none;
   display: block;
 }
+.text-desc{
+  font-size:22px;
+
+}
 
 .dropdown a:hover {background-color: #ddd;}
