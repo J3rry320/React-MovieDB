@@ -32,7 +32,7 @@ class SearchBar extends Component {
   <div>
 
 <input type = "search"
-className="form-control"
+className="form-control  mt-5"
 placeholder="Type the Movie Name"
 
 value = {

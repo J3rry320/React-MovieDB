@@ -2,6 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Stars from './starcounter';
 const Media=(props)=>{
+
+    let budget,revenue;
+    budget=props.budget===0?"NA":props.budget/1000000+"M"
+   revenue=props.revenue===0?"NA":props.revenue/1000000+"M"
+
+
     return (
         <div className="media">
         <center>
@@ -32,11 +38,11 @@ const Media=(props)=>{
 <span className="left-span pt-2">
 <span className="pr-3">
 <i className="fas fa-money-bill-alt pr-2"></i>
-{props.budget}
+{budget}
 </span>
 <span>
 <i className="far fa-money-bill-alt pr-2"></i>
-{props.revenue}
+{revenue}
 </span>
 
 

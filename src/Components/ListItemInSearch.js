@@ -9,7 +9,7 @@ hide:""
         }
     }
     ChangeClass=(bool)=>{
-        return bool?this.setState({hide:"d-none"}):this.setState({hide:"d-block list-group-item"})
+        return bool?this.setState({hide:"d-none"}):this.setState({hide:"d-block list-group-item list-group-item-dark text-white"})
     }
     render(){
          return (

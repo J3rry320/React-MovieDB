@@ -11,7 +11,7 @@ const Hide=props.hide?"d-none":"d-block"
     })
 
     return(
-        <ul className={`col-md-12 ${Hide} col-sm-12 list-group`}>
+        <ul className={` col-md-12 ${Hide} col-sm-12 list-group`}>
     {VideoItems}
         </ul>
     )
