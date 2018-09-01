@@ -2,9 +2,13 @@ import React,{Component} from 'react';
 import Search from "./SearchBar";
 import axios from 'axios';
 import Card from './Desricptor';
-import {uniqBy} from 'lodash';
+import DropDown from './DropDown';
+
+
 let value=null
 let titleArray=[];
+
+
 let arrToPass=null;
 class Home extends Component{
     constructor(props){
@@ -20,7 +24,6 @@ class Home extends Component{
         this.fetchMovieID=this.fetchMovieID.bind(this);
         this.setInput=this.setInput.bind(this)
     }
-
 
     fetchMovieID(value,movieID){
        // console.log(value)
@@ -130,6 +133,7 @@ if(arrToPass=this.state.data){
             <div className="row">
 
             <div className="col-sm-12">
+            <h4 className="text-center">Search a Movie By Name</h4>
             <Search value={this.state.value} onchange={this.setValue} callback = {
                     this.Search
                   }
@@ -144,6 +148,13 @@ if(arrToPass=this.state.data){
                   />
 
             </div>
+            <br/>
+            <div className="col-12">
+            <h4 className="text-center">Search a Specific Movie</h4>
+            </div>
+
+    <DropDown/>
+
             </div>
 
 
@@ -153,9 +164,7 @@ if(arrToPass=this.state.data){
             </div>
           )
       }
-      componentDidMount(){
 
-      }
 
       componentWillUpdate(props,state){
 

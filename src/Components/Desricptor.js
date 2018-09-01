@@ -21,7 +21,8 @@ class Cards extends Component{
 
     fetchMovieByDescription(genre,country,cast){
         let url;
-        console.log(genre,country.substring(0,2))
+//        console.log(genre,country.substring(0,2))
+console.log(cast)
        if(genre && country && !cast){
          url=`https://api.themoviedb.org/3/discover/movie?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}&region=${country.substring(0,2)}`;
        }
@@ -49,7 +50,7 @@ class Cards extends Component{
             this.setState({
                 title:element.title,
                 Description:element.overview,
-                Poster:"http://image.tmdb.org/t/p/w185/"+element.poster_path,
+                Poster:"http://image.tmdb.org/t/p/w342/"+element.poster_path,
                 homepage:element.homepage,
                 date:element.release_date,
                 tagline:element.tagline,
@@ -57,7 +58,7 @@ class Cards extends Component{
                 runtime:element.runtime,
                 revenue:element.revenue,
                 popularity:element.popularity,
-                background:"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+element.backdrop_path,
+                background:"http://image.tmdb.org/t/p/original"+element.backdrop_path,
                 budget:element.budget,
                 voteCount:element.vote_count,
                 statusOfRelease:element.status,
@@ -112,7 +113,7 @@ else{
         else if(this.state.toShowMovie && this.props.data.length!==0 ){
             return(
 
-<div className="container" style={{backgroundImage:`url(${this.state.background})`,backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
+<div className="container-fluid pt-2 mt-5" style={{backgroundImage:`url(${this.state.background})`,backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
 
 
                 <div className="row">
