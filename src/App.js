@@ -6,6 +6,7 @@ import './App.css';
 import Home from './Components/home'
 import Upcoming from "./Components/Upcoming";
 import {Link,Route,Switch} from 'react-router-dom'
+import DropDown from './Components/DropDown';
 class App extends Component {
 
 constructor(props){
@@ -39,14 +40,16 @@ let switchClass=this.state.hiddenHome?"d-none":"d-block"
       <li className="nav-item">
       <Link className="nav-link pr-2" to="/upcoming">Upcoming</Link>
       </li>
-
+      <li className="nav-item">
+      <Link className="nav-link pr-2" to="/all">Find Specific Movies</Link>
+      </li>
     </ul>
 
   </div>
 </nav>
 
         <Switch>
-
+             <Route path="/all" component={DropDown}/>
             <Route path="/upcoming" component={Upcoming}/>
 
 

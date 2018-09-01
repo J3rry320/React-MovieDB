@@ -10,13 +10,15 @@ const Media=(props)=>{
     let budget,revenue,country_id,language_id,show,show_tag;
     budget=props.budget===0?"NA":props.budget/1000000+"M"
    revenue=props.revenue===0?"NA":props.revenue/1000000+"M"
+if(props.language){
+    language_id=props.language.map(element=>{
 
-   language_id=props.language.map(element=>{
 
 
+        return " "+lang[element.iso_639_1].nativeName+" "
+    })
+}
 
-    return " "+lang[element.iso_639_1].nativeName+" "
-})
 
 
 country_id=props.country.map(element=>{
@@ -25,16 +27,17 @@ country_id=props.country.map(element=>{
 })
 show=props.homepage?"d-block":"d-none"
 show_tag=props.tagline?"d-block":"d-none"
-
+let classToPass=props.color?"row text-dark":"row"
+let buttonVisible=props.button?"d-none":"btn btn-block btn-primary";
     return (
 
-        <div className="row">
+        <div className={classToPass}>
 <div className="col-md-4 col-sm-12">
 <img className="mr-3" src={props.Poster} alt="Generic placeholder image"/>
         <br/>
        <button data-id={props.genreId} data-country={props.country.map(element=>{
            return element.iso_3166_1;
-       })} onClick={e=>props.callback(e.target.dataset.id,e.target.dataset.country)} className="btn btn-block btn-primary"> Movies of this genre</button>
+       })} onClick={e=>props.callback(e.target.dataset.id,e.target.dataset.country)} className={buttonVisible}> Movies of this genre</button>
 </div>
 
 
@@ -119,7 +122,7 @@ show_tag=props.tagline?"d-block":"d-none"
 
 <br/>
 <span className="text-desc left-span pt-2">
-<i class="fas fa-language pl-2 pr-2"></i>
+<i className="fas fa-language pl-2 pr-2"></i>
 {language_id}
 </span>
 

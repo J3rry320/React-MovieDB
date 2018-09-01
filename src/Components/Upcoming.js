@@ -4,6 +4,7 @@ import axios from 'axios';
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 import Stars from './starcounter'
+import Modal from './Modal';
 
 class UpcomingMovies extends Component{
     constructor(props){
@@ -11,13 +12,21 @@ class UpcomingMovies extends Component{
         this.state={
          element:[],
          item:[],
-         ifForOther:this.props.data
+         ifForOther:this.props.data,
+         Modal:null
         }
         this._onSelect=this._onSelect.bind(this)
 
     }
 
+OpenModal(movie_id){
+    axios.get(`https://api.themoviedb.org/3/movie/${movie_id}?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&append_to_response=credits`).then(res=>{
 
+    this.setState({Modal:<Modal open={true} data={res.data}/>})
+    }).catch(err=>{
+        console.log(err)
+    })
+}
 
     updateItems(array){
         if(this.props.data){
@@ -27,13 +36,15 @@ class UpcomingMovies extends Component{
                 <img className="mr-3" src={"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+items.poster_path} alt="Generic placeholder image"/>
                 <div className="media-body">
                   <h5 className="mt-3 mb-1">{items.title}</h5>
-                  <br/>
+
                   <span className="left-span">
 
-                  <Stars total={items.vote_average} /></span><br/>
+                  <Stars total={items.vote_average} /></span><br/><br/>
                   <span>{items.release_date}</span>
                   <br/>
                 {items.overview}
+<br/>
+                <button data-id={items.id} onClick={e=>this.OpenModal(e.target.dataset.id)}>Learn More</button>
                 </div>
               </li>)
             })
@@ -55,6 +66,8 @@ else{
           <span>{items.date}</span>
           <br/>
         {items.Description}
+        <br/>
+        <button data-id={items.id} onClick={e=>this.OpenModal(e.target.dataset.id)}>Learn More</button>
         </div>
       </li>)
     })
@@ -219,9 +232,17 @@ const options=["Rating Low To High","Rating High To Low","Alphabetical","Date"]
 
           return(
         <div key={1}>
+<div className="mt-2 mb-2">
+<Dropdown options={options} onChange={this._onSelect}  placeholder="Select an option" />
+</div>
 
-<Dropdown options={options} onChange={this._onSelect} value={options[0]} placeholder="Select an option" />
+
+<div className="mt-4" key={1}>
 {this.state.item}
+
+{this.state.Modal}
+</div>
+
 
         </div>
           )

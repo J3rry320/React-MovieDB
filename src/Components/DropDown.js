@@ -4,6 +4,7 @@ import Lang from './language.json';
 import {invert} from 'lodash';
 import axios from 'axios';
 import UpdateItems from './Upcoming';
+
 let year=[];
 let genreName=[];
 let language=[];
@@ -61,9 +62,7 @@ items:null
 
 
             }
-            searchActor(term){
 
-            }
             req(years,genre,langToSearch){
                 let url=''
 if(years!=undefined&&genre!=undefined&&langToSearch!=undefined){
@@ -133,6 +132,9 @@ else {
 
 
             <div className="row">
+            <div className="col-12">
+            <h4 className="text-center">Select One or more Options</h4>
+            </div>
       <div className="col-md-4 col-sm-6">
 
 <Dropdown options={year} onChange={this._onSelect} data-id="year" value={year[0]}  placeholder="Year" /></div>
@@ -142,9 +144,15 @@ else {
 <Dropdown options={language} onChange={this._onSelect} value={language[0]}  placeholder=" Language" /></div>
 
             <div className="col-sm-12">
-<button onClick={e=>this.req(years,genreId,langToSearch)}>Search</button>
+            <center>
+            <button className=" mt-3 btn btn-block btn-success" onClick={e=>this.req(years,genreId,langToSearch)}>Search</button>
+            </center>
+
             </div>
+            <div className="container">
 {this.state.items}
+            </div>
+
             </div>
             </div>
         )

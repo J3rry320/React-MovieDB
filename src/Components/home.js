@@ -149,11 +149,8 @@ if(arrToPass=this.state.data){
 
             </div>
             <br/>
-            <div className="col-12">
-            <h4 className="text-center">Search a Specific Movie</h4>
-            </div>
 
-    <DropDown/>
+
 
             </div>
 
