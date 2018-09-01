@@ -14,12 +14,15 @@ class UpcomingMovies extends Component{
          ifForOther:this.props.data
         }
         this._onSelect=this._onSelect.bind(this)
+
     }
 
-    updateItems(array){
-        if(this.state.ifForOther){
 
-            let items=this.state.ifForOther.map(items=>{
+
+    updateItems(array){
+        if(this.props.data){
+
+            let items=array.map(items=>{
                 return (  <li className="media" data-id={items.id} key={items.id}>
                 <img className="mr-3" src={"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+items.poster_path} alt="Generic placeholder image"/>
                 <div className="media-body">
@@ -99,13 +102,14 @@ else{
           }
         )
       }
+
       _onSelect(value){
 
     switch(value.value){
         case "Rating Low To High":
 
         if(this.state.ifForOther){
-            this.updateItems(this.state.ifForOther.sort(function(a, b) {
+            this.updateItems(this.props.data.sort(function(a, b) {
                 let textA = a.vote_average;
                 let textB = b.vote_average;
                 return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
@@ -134,7 +138,7 @@ else{
         break;
         case "Rating High To Low":
         if(this.state.ifForOther){
-            this.updateItems(this.state.ifForOther.sort(function(a, b) {
+            this.updateItems(this.props.data.sort(function(a, b) {
                 let textA = a.vote_average;
                 let textB = b.vote_average;
                 return (textA > textB) ? -1 : (textA < textB) ? 1 : 0;
@@ -156,7 +160,7 @@ else{
 break;
         case "Alphabetical":
         if(this.state.ifForOther){
-            this.updateItems(this.state.ifForOther.sort(function(a, b) {
+            this.updateItems(this.props.data.sort(function(a, b) {
                 let textA = a.title.toUpperCase();
                 let textB = b.title.toUpperCase();
                 return (textA <textB) ? -1 : (textA>textB) ? 1 : 0;
@@ -183,7 +187,7 @@ break;
         break;
         case "Date":
         if(this.state.ifForOther){
-            this.updateItems(this.state.ifForOther.sort(function(a, b) {
+            this.updateItems(this.props.data.sort(function(a, b) {
                 let textA = a.release_date.toUpperCase();
                 let textB = b.release_date.toUpperCase();
                 return (textA <textB) ? -1 : (textA>textB) ? 1 : 0;
@@ -222,19 +226,19 @@ const options=["Rating Low To High","Rating High To Low","Alphabetical","Date"]
         </div>
           )
       }
-      clickFunction(){
 
-      }
       componentDidMount(){
 
         this.fetchUpcoming();
+        this.updateItems(this.state.element||this.props.data);
 
       }
-      componentWillUpdate(props,state){
-
-
-
+      componentWillReceiveProps(props,state){
+         // console.log(props.data)
+this.updateItems(props.data)
       }
+
+
 
 
 }
