@@ -29,11 +29,13 @@ OpenModal(movie_id){
 }
 
     updateItems(array){
+        console.log(array)
         if(this.props.data){
 
             let items=array.map(items=>{
-                return (  <li className="media" data-id={items.id} key={items.id}>
-                <img className="mr-3" src={"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+items.poster_path} alt="Generic placeholder image"/>
+                let image=items.poster_path?"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+items.poster_path:"https://www.toadandco.com/c.1311986/sca-dev-elbrus/img/no_image_available.jpeg"
+                return (  <li className="media mt-3 border-bottom" data-id={items.id} key={items.id}>
+                <img className="mr-3" src={image} alt="Generic placeholder image"/>
                 <div className="media-body">
                   <h5 className="mt-3 mb-1">{items.title}</h5>
 
@@ -41,10 +43,10 @@ OpenModal(movie_id){
 
                   <Stars total={items.vote_average} /></span><br/><br/>
                   <span>{items.release_date}</span>
-                  <br/>
-                {items.overview}
+
 <br/>
-                <button data-id={items.id} onClick={e=>this.OpenModal(e.target.dataset.id)}>Learn More</button>
+
+                <button className="mt-1 mb-3 btn btn-info" data-id={items.id} onClick={e=>this.OpenModal(e.target.dataset.id)}>Learn More</button>
                 </div>
               </li>)
             })
@@ -55,8 +57,9 @@ OpenModal(movie_id){
         }
 else{
     let items=array.map(items=>{
-        return (  <li className="media" data-id={items.id} key={items.id}>
-        <img className="mr-3" src={items.Poster} alt="Generic placeholder image"/>
+        let image=items.Poster?items.Poster:"https://www.toadandco.com/c.1311986/sca-dev-elbrus/img/no_image_available.jpeg"
+        return (  <li className="media mt-3 border-bottom" data-id={items.id} key={items.id}>
+        <img className="mr-3" src={image} alt="Generic placeholder image"/>
         <div className="media-body">
           <h5 className="mt-3 mb-1">{items.title}</h5>
           <br/>
@@ -64,10 +67,11 @@ else{
 
           <Stars total={items.avgRating} /></span><br/>
           <span>{items.date}</span>
-          <br/>
-        {items.Description}
-        <br/>
-        <button data-id={items.id} onClick={e=>this.OpenModal(e.target.dataset.id)}>Learn More</button>
+
+
+<br/>
+
+        <button className="mt-1 mb-3 btn btn-info" data-id={items.id} onClick={e=>this.OpenModal(e.target.dataset.id)}>Learn More</button>
         </div>
       </li>)
     })
@@ -81,40 +85,6 @@ else{
 
 
     }
-    fetchUpcoming(){
-        axios.get("https://api.themoviedb.org/3/movie/upcoming?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&page=1&append_to_response=credits").then(
-          result=>{
-            result.data.results.forEach(element=>{
-
-              this.state.element.push({
-                    title:element.title,
-                    Description:element.overview,
-                    Poster:"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+element.poster_path,
-
-                    date:element.release_date,
-
-                    avgRating:element.vote_average,
-
-                    popularity:element.popularity,
-                    background:"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+element.backdrop_path,
-                    language:element.original_language,
-                    voteCount:element.vote_count,
-
-                    id:element.id,//All are array from here
-
-                    genre:element.genre_ids,
-
-
-
-
-
-                })
-                            })
-                        this.updateItems(this.state.element)
-
-          }
-        )
-      }
 
       _onSelect(value){
 
@@ -226,14 +196,14 @@ break;
     }
       render(){
 
-
+console.log(this.state.item,this.state.ifForOther)
 
 const options=["Rating Low To High","Rating High To Low","Alphabetical","Date"]
 
           return(
         <div key={1}>
 <div className="mt-2 mb-2">
-<Dropdown options={options} onChange={this._onSelect}  placeholder="Select an option" />
+<Dropdown options={options}  onChange={this._onSelect} value={options[0]}  placeholder="Select an option" />
 </div>
 
 
@@ -247,15 +217,60 @@ const options=["Rating Low To High","Rating High To Low","Alphabetical","Date"]
         </div>
           )
       }
+      fetchUpcoming(){
+        if(!this.props.data){
+            console.log("Raw")
+            axios.get("https://api.themoviedb.org/3/movie/upcoming?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&page=1&append_to_response=credits").then(
+                result=>{
+                  result.data.results.forEach(element=>{
+
+                    this.state.element.push({
+                          title:element.title,
+                          Description:element.overview,
+                          Poster:"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+element.poster_path,
+
+                          date:element.release_date,
+
+                          avgRating:element.vote_average,
+
+                          popularity:element.popularity,
+                          background:"http://image.tmdb.org/t/p/w185_and_h278_bestv2//"+element.backdrop_path,
+                          language:element.original_language,
+                          voteCount:element.vote_count,
+
+                          id:element.id,//All are array from here
+
+                          genre:element.genre_ids,
+
+
+
+
+
+                      })
+                                  })
+                              this.updateItems(this.state.element)
+
+                }
+              )
+        }
+        else{
+            this.updateItems(this.props.data)
+        }
+
+      }
+
 
       componentDidMount(){
 
         this.fetchUpcoming();
-        this.updateItems(this.state.element||this.props.data);
+
+
+
 
       }
       componentWillReceiveProps(props,state){
          // console.log(props.data)
+
 this.updateItems(props.data)
       }
 

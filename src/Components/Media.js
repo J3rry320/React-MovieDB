@@ -8,8 +8,8 @@ import 'react-circular-progressbar/dist/styles.css';
 const Media=(props)=>{
 
     let budget,revenue,country_id,language_id,show,show_tag;
-    budget=props.budget===0?"NA":props.budget/1000000+"M"
-   revenue=props.revenue===0?"NA":props.revenue/1000000+"M"
+    budget=props.budget===0?"NA":"$"+props.budget/1000000+"M"
+   revenue=props.revenue===0?"NA":"$"+Math.round(props.revenue/1000000)+"M"
 if(props.language){
     language_id=props.language.map(element=>{
 
@@ -29,10 +29,15 @@ show=props.homepage?"d-block":"d-none"
 show_tag=props.tagline?"d-block":"d-none"
 let classToPass=props.color?"row text-dark":"row"
 let buttonVisible=props.button?"d-none":"btn btn-block btn-primary";
+let col=props.col?"col-md-6":"col-md-4";
+let col2=props.col?"col-md-6":"col-md-8";
+let col3=props.col?"col-md-6":"col-md-4";
+let col4=props.col?"col-md-6":"col-md-8";
+console.log(col,col2,col3,col4)
     return (
 
         <div className={classToPass}>
-<div className="col-md-4 col-sm-12">
+<div className={`col-sm-12 ${col}`}>
 <img className="mr-3" src={props.Poster} alt="Generic placeholder image"/>
         <br/>
        <button data-id={props.genreId} data-country={props.country.map(element=>{
@@ -45,7 +50,7 @@ let buttonVisible=props.button?"d-none":"btn btn-block btn-primary";
 
 
 
-<div className="col-md-8 col-sm-12">
+<div className={`${col2} col-sm-12`}>
 <div className="row">
 <div className="col-md-12 col-sm-12">
 <span className="left-span">
@@ -65,13 +70,13 @@ let buttonVisible=props.button?"d-none":"btn btn-block btn-primary";
 
 
 <h5 className={`text-left ${show_tag}`}>"{props.tagline}"</h5>
-<Stars  total={props.avgRating}/>
+<Stars color={props.starColor}  total={props.avgRating}/>
 <br className={show}/><br className={show}/>
-<a className={`alert-link${show}`} href={props.homepage}>{props.homepage}</a>
+<a className={` alert-link ${show}`} href={props.homepage}>{props.homepage}</a>
 <p className="text-justify lead pt-2">{props.Description}</p>
 <div className="row">
 
-<div className="col-md-3 col-sm-6 float-left border-right">
+<div className={`${col3} col-sm-6 col-xs-6 float-left border-right`}>
 
 <span className="text-desc left-span pt-2">
 
@@ -96,7 +101,7 @@ let buttonVisible=props.button?"d-none":"btn btn-block btn-primary";
 
 
 </div>
-<div className="col-md-9 col-sm-6 float-right">
+<div className={`${col4} col-sm-6 col-xs-6 float-right`}>
 
 
 <span className="text-desc left-span pr-3 pt-2">

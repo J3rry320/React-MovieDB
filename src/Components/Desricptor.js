@@ -22,7 +22,7 @@ class Cards extends Component{
     fetchMovieByDescription(genre,country,cast){
         let url;
 //        console.log(genre,country.substring(0,2))
-console.log(cast)
+//console.log(cast)
        if(genre && country && !cast){
          url=`https://api.themoviedb.org/3/discover/movie?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=${genre}&region=${country.substring(0,2)}`;
        }

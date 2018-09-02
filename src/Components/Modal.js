@@ -5,13 +5,10 @@ import Media from './Media';
 import Cast from './Cast';
 const customStyles = {
   content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
+
+    backgroundColor:"red"
+  },
+
 };
 
 // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
@@ -44,8 +41,10 @@ class ModalMovie extends React.Component {
 
   render() {
 
-      let genre="",genreId="";
-      console.log(this.props.data)
+      let genre=this.props.data.genres.map(ele=>{
+          return ele.name+" "
+      }),genreId="";
+      console.log(genre)
 
     return (
       <div className="text-dark">
@@ -58,11 +57,12 @@ class ModalMovie extends React.Component {
           contentLabel="Example Modal"
         >
 
-          <button className="float-right" onClick={this.closeModal}>close</button>
+          <button className="btn btn-outline-light float-right" onClick={this.closeModal}><i className="far text-dark fa-window-close"></i></button>
 
-          <Media  Poster={"http://image.tmdb.org/t/p/w320/"+this.props.data.
+          <Media  Poster={"http://image.tmdb.org/t/p/w342/"+this.props.data.
 poster_path
 }
+col={true}
 color={"#000"}
 button={true}
       popularity={this.props.data.popularity}
@@ -70,10 +70,10 @@ button={true}
       country={this.props.data.production_countries}
 language={this.props.data.spoken_languages}
       title={this.props.data.title} tagline={this.props.data.tagline}
-      avgRating={this.props.data.vote_avg} date={this.props.data.release_date}
+      avgRating={this.props.data.vote_average} date={this.props.data.release_date}
       runtime={this.props.data.runtime} budget={this.props.data.budget}
       revenue={this.props.data.revenue} Description={this.props.data.overview}
-      genre={genre}  genreId={genreId}/>
+      genre={genre}  genreId={genreId} starColor={true} />
       <Cast textDark={true} showButton={true} data={this.props.data.credits}/>
         </Modal>
       </div>
