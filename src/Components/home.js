@@ -34,16 +34,18 @@ class Home extends Component{
 
 
         this.setState({hidden:true})
+
         axios.get(url).then(result => {
    // console.log(result.data)
+   titleArray.push(result.data)
+   this.setCookie()
           this.setState({data:[result.data]},()=>{
 
             this.checkCookie()
 
           })
 
-          titleArray.push(result.data)
-          this.setCookie()
+
 
         }).catch(error => {
             console.log(error)
@@ -104,10 +106,11 @@ this.setState({hidden:val})
         let val=""
         let title=[]
         let arrToCheck=this.state.data.map(ele=>{return ele.title});
-        arr.map(element=>{
+        if(arr!=null){arr.map(element=>{
 
           title.push(element.title)
-        })
+        })}
+
         console.log(title,arrToCheck)
 
 
@@ -124,9 +127,7 @@ return val;
       render(){
 
 arrToPass=this.state.data
-if(arrToPass=this.state.data){
 
-}
           return(
               <div>
             <div className="container">

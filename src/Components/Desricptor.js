@@ -116,7 +116,7 @@ else{
 <div className="container-fluid pt-2 mt-5" style={{backgroundImage:`url(${this.state.background})`,backgroundRepeat:"no-repeat",backgroundSize:"cover"}}>
 
 
-                <div className="row">
+                <div className="row bg-opaque">
                 <div className="col-sm-12">
       <Media Poster={this.state.Poster}
       popularity={this.state.popularity}

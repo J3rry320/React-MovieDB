@@ -13,7 +13,8 @@ class UpcomingMovies extends Component{
          element:[],
          item:[],
          ifForOther:this.props.data,
-         Modal:null
+         Modal:null,
+         listElems:[]
         }
         this._onSelect=this._onSelect.bind(this)
 
@@ -196,7 +197,6 @@ break;
     }
       render(){
 
-console.log(this.state.item,this.state.ifForOther)
 
 const options=["Rating Low To High","Rating High To Low","Alphabetical","Date"]
 
@@ -206,11 +206,25 @@ const options=["Rating Low To High","Rating High To Low","Alphabetical","Date"]
 <Dropdown options={options}  onChange={this._onSelect} value={options[0]}  placeholder="Select an option" />
 </div>
 
-
 <div className="mt-4" key={1}>
 {this.state.item}
 
 {this.state.Modal}
+
+<div className="col-12">
+<nav aria-label="Page navigation example">
+  <ul className="pagination">
+    <li className="page-item disabled">
+      <a class="page-link"  tabindex="-1">Previous</a>
+    </li>
+
+{this.state.listElems}
+    <li className="page-item">
+      <a className="page-link">Next</a>
+    </li>
+  </ul>
+</nav>
+</div>
 </div>
 
 
@@ -219,9 +233,15 @@ const options=["Rating Low To High","Rating High To Low","Alphabetical","Date"]
       }
       fetchUpcoming(){
         if(!this.props.data){
-            console.log("Raw")
+
             axios.get("https://api.themoviedb.org/3/movie/upcoming?api_key=b1ceec131e81ece0cacf2f641d01910a&language=en-US&page=1&append_to_response=credits").then(
                 result=>{
+                    console.log(result.data.total_pages)
+for(let i=1;i<result.data.total_pages;i++){
+    this.setState(prev=>({listElems:[...prev.listElems,<li className="page-item" key={i}><a class="page-link" href="#">{i}</a></li>]}
+))
+}
+
                   result.data.results.forEach(element=>{
 
                     this.state.element.push({
