@@ -5,6 +5,7 @@ import Studio from './Studio';
 import Cast from './Cast';
 import Media from './Media';
 import Upcoming from './Upcoming';
+import Youtube from './YoutubePlayer';
 
 
 let itemToShow=null;
@@ -109,7 +110,7 @@ else{
 
         if (this.props.data.length===0){
             return (<center>
-                <h3 className="display-4 pt-4">
+                <h3 className="display-4 pt-4   ">
                    Start Typing and Search Movies
                 </h3>
             </center>)
@@ -145,8 +146,14 @@ language={this.state.spoken_languages}
 
       <Cast callback={this.fetchMovieByDescription} data={this.state.Cast}/>
 
-
         </div>
+        <div className="container">
+        <div className="col-sm-12">
+<Youtube term={this.state.title}/>
+        </div>
+        </div>
+
+
 
                 </div>
 
