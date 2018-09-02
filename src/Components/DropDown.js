@@ -137,11 +137,11 @@ else {
             </div>
       <div className="col-md-4 col-sm-6">
 
-<Dropdown options={year} onChange={this._onSelect} data-id="year" value={year[0]}  placeholder="Year" /></div>
+<Dropdown options={year} onChange={this._onSelect} data-id="year"   placeholder="Year" /></div>
 <div className="col-md-4 col-sm-6">
-<Dropdown options={genreName} onChange={this._onSelect} value={genreName[0]}  placeholder=" Genre" /></div>
+<Dropdown options={genreName} onChange={this._onSelect}   placeholder=" Genre" /></div>
 <div className="col-md-4 col-sm-6">
-<Dropdown options={language} onChange={this._onSelect} value={language[0]}  placeholder=" Language" /></div>
+<Dropdown options={language} onChange={this._onSelect}   placeholder=" Language" /></div>
 
             <div className="col-sm-12">
             <center>

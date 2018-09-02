@@ -34,13 +34,13 @@ let switchClass=this.state.hiddenHome?"d-none":"d-block"
 
   <div className="collapse navbar-collapse" id="navbarSupportedContent" >
     <ul className="nav navbar-nav ml-auto">
-      <li className="nav-item active">
+      <li className="nav-item" onClick={e=>e.currentTarget.className="sctive nav-item"}>
       <Link className="nav-link" to="/">Home</Link>
       </li>
-      <li className="nav-item">
+      <li className="nav-item"  onClick={e=>this.setState({class:"active"})}>
       <Link className="nav-link pr-2" to="/upcoming">Upcoming</Link>
       </li>
-      <li className="nav-item">
+      <li className="nav-item"  onClick={e=>this.setState({class:"active"})}>
       <Link className="nav-link pr-2" to="/all">Find Specific Movies</Link>
       </li>
     </ul>

@@ -108,7 +108,11 @@ else{
 
 
         if (this.props.data.length===0){
-            return "Type Bitch"
+            return (<center>
+                <h3 className="display-4 pt-4">
+                   Start Typing and Search Movies
+                </h3>
+            </center>)
         }
         else if(this.state.toShowMovie && this.props.data.length!==0 ){
             return(
